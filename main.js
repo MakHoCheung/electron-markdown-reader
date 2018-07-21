@@ -6,8 +6,8 @@ const path = require("path");
 function createMainWindow() {
     let win = null;
     let windowOptions = {
-        width: 800,
-        height: 600
+        width: 1100,
+        height: 800
     };
     win = new BrowserWindow(windowOptions);
     win.loadURL(path.join('file://', __dirname, 'main.html'));
@@ -15,9 +15,11 @@ function createMainWindow() {
         win = null;
     });
     win.webContents.openDevTools();
+    win.setTitle('Laurel MarkDown Reader');
+    win.setMenu(null);
 
 }
 app.on("ready", createMainWindow);
 app.on("window-all-closed", () => {
-    app.quit;
+    app.quit();
 });

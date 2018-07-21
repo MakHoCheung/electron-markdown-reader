@@ -3,10 +3,90 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Page Title</title>
+    <link type="text/css" rel="stylesheet" href="./css/materialize.min.css" />
+    <style type="text/css">
+        .mainContent {
+            padding-left: 320px;
+        }
+
+        @media only screen and (max-width: 992px) {
+            .mainContent {
+                padding-left: 0;
+            }
+        }
+
+        .sidenav {
+            overflow: visible;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .list {
+            flex: 1 0 auto;
+        }
+
+        .theContent::-webkit-scrollbar {
+            width: 4px;
+            background-color: transparent
+        }
+
+        .theContent::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: black
+        }
+
+        .theContent::-webkit-scrollbar-button {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
-    <script type="text/javascript" src="./js/init.js"></script>
+    <nav id="slide-out" class="sidenav sidenav-fixed">
+        <header>
+            <h5 class="black-text center-align">Laurel Markdown</h5>
+        </header>
+        <main class="list">
+            <section id="openButtonSection" class="center">
+                <button id="openButton" class="btn grey" @click="readMD()">{{message}}</button>
+            </section>
+            <!--<ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header">
+                                <span class="black-text">Recently</span>
+                            </div>
+                            <div class="collapsible-body">
+                                <ul class="collection">
+                                    <li class="collection-item black-text"><span>dsfsdafa</span></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>-->
+            <section id="fileListSection">
+                <ul class="collection" id="fileList">
+                    <li class="collection-item black-text">test</li>
+                    <li v-for="file in files" class="black_text">
+                        {{file.name}}
+                    </li>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <div class="divider"></div>
+            <section class="about center">
+                <a class="black-text" href="./view/about.html">About</a>
+            </section>
+        </footer>
+    </nav>
+    <!--<a href="#" data-target="slide-out" class="btn sidenav-trigger hide-on-large">
+        menu
+    </a>-->
+    <main class="mainContent" id="mainContent" v-html="rawHtml">
+    </main>
 </body>
+<script type="text/javascript">
+    require('./js/init');
+</script>
 
 </html>
