@@ -11,5 +11,10 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^2.0.5"
+  },
+  "dependencies": {
+    "materialize-css": "^1.0.0-rc.2",
+    "showdown": "^1.8.6",
+    "vue": "^2.5.16"
   }
 }
