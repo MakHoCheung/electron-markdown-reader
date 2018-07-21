@@ -2,10 +2,14 @@
   "name": "electron-markdown-reader",
   "version": "0.0.1",
   "description": "a markdown reader of electron",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"good\""
   },
   "author": "Mak Ho Cheung",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^2.0.5"
+  }
 }
