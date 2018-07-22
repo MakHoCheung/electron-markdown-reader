@@ -39,6 +39,13 @@
         .theContent::-webkit-scrollbar-button {
             display: none;
         }
+        #fileList a{
+            font-size: 13px !important;
+            font-weight: 450 !important;
+            height: fit-content !important;
+            line-height: 38px !important;
+        }
+    
     </style>
 </head>
 
@@ -64,10 +71,17 @@
                         </li>
                     </ul>-->
             <section id="fileListSection">
-                <ul class="collection" id="fileList">
-                    <li class="collection-item black-text">test</li>
-                    <li v-for="file in files" class="black_text">
-                        {{file.name}}
+                <ul class="collapsible">
+                    <li>
+                        <a class="collapsible-header">Files</a>
+                        <div class="divider"></div>
+                        <div class="collapsible-body">
+                            <ul class="collection" id="fileList">
+                                <li v-for="(file,index) in files" @click="click(file,index)" :class="{active:file.isActive,center:true}">
+                                    <a class="black-text">{{file.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </section>

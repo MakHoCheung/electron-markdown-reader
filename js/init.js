@@ -4,8 +4,9 @@ const Vue = require('./vue');
 const dialog = require('electron').remote.dialog;
 const fileSystem = require('fs');
 let openingFileName;
+const openedFiles = new Array();
 let sideNav = M.Sidenav.init(document.querySelector('.sidenav'));
-let collapSible = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+let collapSible = M.Collapsible.init(document.querySelector('.collapsible'));
 let openButton = new Vue({
     el: '#openButton',
     data: {
@@ -18,11 +19,31 @@ let openButton = new Vue({
 let fileList = new Vue({
     el: '#fileList',
     data: {
-        files: []
+        files: [],
+        activeIndex: -1,
+
     },
     methods: {
         addFile(fileName) {
-            this.files.push({ name: fileName });
+            this.files.push({ name: fileName, isActive: true });
+            if (this.activeIndex < 0) {
+                this.activeIndex = 0;
+            } else {
+                this.files[this.activeIndex].isActive = false;
+                this.activeIndex = this.files.length - 1;
+            }
+            collapSible.open();
+        },
+        removeFile(fileName) {
+
+        },
+        click(file, index) {
+            if (this.activeIndex >= 0 && this.activeIndex !== index) {
+                this.files[this.activeIndex].isActive = false;
+                file.isActive = true;
+                this.activeIndex = index;
+                mainContent.updateMainContent(index);
+            }
         }
     }
 });
@@ -32,8 +53,15 @@ let mainContent = new Vue({
         rawHtml: '<span>fuck</span>'
     },
     methods: {
-        updataMainContent: function (formatHtml) {
+        addMainContent: function (fileName, formatHtml) {
+            openedFiles.push({ name: fileName, html: formatHtml });
             this.rawHtml = formatHtml;
+        },
+        updateMainContent: function (index) {
+            let openedFile = openedFiles[index];
+            if (openedFile) {
+                this.rawHtml = openedFile.html;
+            }
         }
     }
 })
@@ -47,7 +75,7 @@ function openMarkdown() {
         let originMd = fileSystem.readFileSync(filePaths[0].toString()).toString();
         let mdHtml = tranferMDToHtml(originMd);
         fileList.addFile(openingFileName);
-        mainContent.updataMainContent(mdHtml);
+        mainContent.addMainContent(openingFileName, mdHtml);
     });
 }
 
@@ -67,3 +95,4 @@ function tranferMDToHtml(mdContent) {
     const convertor = new showdown.Converter();
     return convertor.makeHtml(mdContent);
 }
+
