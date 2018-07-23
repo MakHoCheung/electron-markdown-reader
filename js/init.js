@@ -2,8 +2,9 @@
 require('./materialize.min');
 const Vue = require('./vue');
 const dialog = require('electron').remote.dialog;
+const remote = require('electron');
 const fileSystem = require('fs');
-let openingFileName;
+let openingIndex;
 const openedFiles = new Array();
 let sideNav = M.Sidenav.init(document.querySelector('.sidenav'));
 let collapSible = M.Collapsible.init(document.querySelector('.collapsible'));
@@ -55,12 +56,16 @@ let mainContent = new Vue({
     methods: {
         addMainContent: function (fileName, formatHtml) {
             openedFiles.push({ name: fileName, html: formatHtml });
+            openingIndex = openedFiles.length - 1;
             this.rawHtml = formatHtml;
+            saveFileToSessionStorage();
         },
         updateMainContent: function (index) {
+            openingIndex = index;
             let openedFile = openedFiles[index];
             if (openedFile) {
                 this.rawHtml = openedFile.html;
+                saveFileToSessionStorage();
             }
         }
     }
@@ -71,10 +76,11 @@ let mainContent = new Vue({
  */
 function openMarkdown() {
     dialog.showOpenDialog({ properties: ['openFile'] }, (filePaths) => {
-        openingFileName = tranferPathToName(filePaths[0]);
+        let openingFileName = tranferPathToName(filePaths[0]);
         let originMd = fileSystem.readFileSync(filePaths[0].toString()).toString();
         let mdHtml = tranferMDToHtml(originMd);
         fileList.addFile(openingFileName);
+
         mainContent.addMainContent(openingFileName, mdHtml);
     });
 }
@@ -94,5 +100,9 @@ function tranferMDToHtml(mdContent) {
     const showdown = require('showdown');
     const convertor = new showdown.Converter();
     return convertor.makeHtml(mdContent);
+}
+
+function saveFileToSessionStorage(){
+    sessionStorage.setItem('openingFile',JSON.stringify(openedFiles[openingIndex]));
 }
 

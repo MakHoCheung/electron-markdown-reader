@@ -96,7 +96,12 @@
     <!--<a href="#" data-target="slide-out" class="btn sidenav-trigger hide-on-large">
         menu
     </a>-->
-    <main class="mainContent" id="mainContent" v-html="rawHtml">
+    <main>
+        <div id="toolBar" class="card blue right-align">
+            <a class="btn red" href="./mainContent.html">全屏</a>
+        </div>
+        <article class="mainContent" id="mainContent" v-html="rawHtml">
+        </article>
     </main>
 </body>
 <script type="text/javascript">
