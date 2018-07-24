@@ -1,4 +1,5 @@
 const electron = require('electron');
+const Mousetrap = require('mousetrap');
 const currentWindow = electron.remote.getCurrentWindow();
 const Vue = require('./vue');
 const contentView = new Vue({
@@ -9,13 +10,25 @@ const contentView = new Vue({
     methods:{
         showView(){
             currentWindow.setFullScreen(true);
-            let file = getFileFromSessionStorage();
+            let status = getStatusFromSessionStorage();
             debugger
-            this.rawHtml = file.html;
+            if(status){
+                let openingIndex = status.pageStatus.openingIndex;
+                let file = status.pageStatus.openedFiles[openingIndex];
+                this.rawHtml = file.html;
+            }
         }
     }
 })
 contentView.showView();
-function getFileFromSessionStorage() {
-    return JSON.parse(sessionStorage.getItem('openingFile'));
+initExitShortCut();
+function getStatusFromSessionStorage() {
+    return JSON.parse(sessionStorage.getItem('status'));
+}
+function initExitShortCut(){
+    Mousetrap.bind('esc',()=>{
+        currentWindow.setFullScreen(false);
+        history.back();
+    });
+
 }

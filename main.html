@@ -5,14 +5,19 @@
     <meta charset="utf-8" />
     <link type="text/css" rel="stylesheet" href="./css/materialize.min.css" />
     <style type="text/css">
-        .mainContent {
+        .main {
             padding-left: 320px;
+            height: 100%;
         }
 
         @media only screen and (max-width: 992px) {
-            .mainContent {
+            .main {
                 padding-left: 0;
             }
+        }
+
+        .mainContent {
+            margin: 30px
         }
 
         .sidenav {
@@ -39,20 +44,40 @@
         .theContent::-webkit-scrollbar-button {
             display: none;
         }
-        #fileList a{
+
+        #fileList a {
             font-size: 13px !important;
             font-weight: 450 !important;
             height: fit-content !important;
             line-height: 38px !important;
         }
-    
+
+        pre {
+            white-space: pre-wrap;
+            /*css-3*/
+            white-space: -moz-pre-wrap;
+            /*Mozilla,since1999*/
+            white-space: -pre-wrap;
+            /*Opera4-6*/
+            white-space: -o-pre-wrap;
+            /*Opera7*/
+            word-wrap: break-word;
+            /*InternetExplorer5.5+*/
+        }
+
+        #fileList li.active {
+            background-color: #1976d2 !important;
+        }
+        #fileList li.active a {
+            color: white !important;
+        }
     </style>
 </head>
 
-<body>
-    <nav id="slide-out" class="sidenav sidenav-fixed">
+<body class="blue-grey lighten-5">
+    <nav id="slide-out" class="sidenav sidenav-fixed hoverable">
         <header>
-            <h5 class="black-text center-align">Laurel Markdown</h5>
+            <h5 class="center-align grey-text">Laurel Markdown</h5>
         </header>
         <main class="list">
             <section id="openButtonSection" class="center">
@@ -73,12 +98,11 @@
             <section id="fileListSection">
                 <ul class="collapsible">
                     <li>
-                        <a class="collapsible-header">Files</a>
-                        <div class="divider"></div>
+                        <a class="collapsible-header grey-text">Files</a>
                         <div class="collapsible-body">
                             <ul class="collection" id="fileList">
-                                <li v-for="(file,index) in files" @click="click(file,index)" :class="{active:file.isActive,center:true}">
-                                    <a class="black-text">{{file.name}}</a>
+                                <li v-for="(file,index) in files" @click="click(file,index)" :class="{active:file.isActive}" class="center">
+                                    <a class="grey-text">{{file.name}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -96,11 +120,11 @@
     <!--<a href="#" data-target="slide-out" class="btn sidenav-trigger hide-on-large">
         menu
     </a>-->
-    <main>
-        <div id="toolBar" class="card blue right-align">
+    <main class="main">
+        <div id="toolBar" class="right-align">
             <a class="btn red" href="./mainContent.html">全屏</a>
         </div>
-        <article class="mainContent" id="mainContent" v-html="rawHtml">
+        <article class="mainContent card-panel grey" id="mainContent" v-html="rawHtml">
         </article>
     </main>
 </body>

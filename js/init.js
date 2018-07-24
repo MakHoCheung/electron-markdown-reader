@@ -4,8 +4,8 @@ const Vue = require('./vue');
 const dialog = require('electron').remote.dialog;
 const remote = require('electron');
 const fileSystem = require('fs');
-let openingIndex;
-const openedFiles = new Array();
+let openingIndex=-1;
+let openedFiles = new Array();
 let sideNav = M.Sidenav.init(document.querySelector('.sidenav'));
 let collapSible = M.Collapsible.init(document.querySelector('.collapsible'));
 let openButton = new Vue({
@@ -45,31 +45,39 @@ let fileList = new Vue({
                 this.activeIndex = index;
                 mainContent.updateMainContent(index);
             }
+        },
+        revert(fileListStatus){
+            fileListStatus.files.forEach(element => {
+                this.files.push(element);
+            });
+            activeIndex = fileListStatus.activeIndex;
+            collapSible.open();
         }
     }
 });
 let mainContent = new Vue({
     el: '#mainContent',
     data: {
-        rawHtml: '<span>fuck</span>'
+        rawHtml: '<span></span>'
     },
     methods: {
         addMainContent: function (fileName, formatHtml) {
             openedFiles.push({ name: fileName, html: formatHtml });
             openingIndex = openedFiles.length - 1;
             this.rawHtml = formatHtml;
-            saveFileToSessionStorage();
+            saveStatusToSessionStorage();
         },
         updateMainContent: function (index) {
             openingIndex = index;
             let openedFile = openedFiles[index];
             if (openedFile) {
                 this.rawHtml = openedFile.html;
-                saveFileToSessionStorage();
+                saveStatusToSessionStorage();
             }
         }
     }
-})
+});
+revertFromStatus();
 
 /*
  * 打开Markdown文件
@@ -102,7 +110,29 @@ function tranferMDToHtml(mdContent) {
     return convertor.makeHtml(mdContent);
 }
 
-function saveFileToSessionStorage(){
-    sessionStorage.setItem('openingFile',JSON.stringify(openedFiles[openingIndex]));
+function saveStatusToSessionStorage(){
+    let status = {
+        fileListStatus:{
+            files:fileList.files,
+            activeIndex:fileList.activeIndex
+        },
+        pageStatus:{
+            openingIndex:openingIndex,
+            openedFiles:openedFiles
+        }
+    };
+    sessionStorage.setItem('status',JSON.stringify(status));
+}
+
+function revertFromStatus(){
+    let statusJson = sessionStorage.getItem('status');
+    if(statusJson){
+        let status = JSON.parse(statusJson);
+        debugger
+        fileList.revert(status.fileListStatus);
+        openingIndex = status.pageStatus.openingIndex;
+        openedFiles = status.pageStatus.openedFiles;
+        mainContent.updateMainContent(openingIndex);
+    }
 }
 
