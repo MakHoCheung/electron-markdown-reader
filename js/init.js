@@ -58,13 +58,15 @@ let fileList = new Vue({
 let mainContent = new Vue({
     el: '#mainContent',
     data: {
-        rawHtml: '<span></span>'
+        rawHtml: '<img src="asset/b.JPG"><h1>Welcome to Laurel</h1>',
+        isCenter:true
     },
     methods: {
         addMainContent: function (fileName, formatHtml) {
             openedFiles.push({ name: fileName, html: formatHtml });
             openingIndex = openedFiles.length - 1;
             this.rawHtml = formatHtml;
+            this.isCenter = false;
             saveStatusToSessionStorage();
         },
         updateMainContent: function (index) {
@@ -72,6 +74,7 @@ let mainContent = new Vue({
             let openedFile = openedFiles[index];
             if (openedFile) {
                 this.rawHtml = openedFile.html;
+                this.isCenter = false;
                 saveStatusToSessionStorage();
             }
         }
