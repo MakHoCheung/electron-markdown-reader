@@ -2,7 +2,7 @@
   "name": "electron-markdown-reader",
   "version": "0.0.1",
   "description": "a markdown reader of electron",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"good\""

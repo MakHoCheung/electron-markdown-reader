@@ -1,13 +1,16 @@
 
 require('./materialize.min');
-const Vue = require('./vue');
+
+//md components
+const sideNav = M.Sidenav.init(document.querySelector('.sidenav'));
+const collapSible = M.Collapsible.init(document.querySelector('.collapsible'));
+
+//raw lib
 const dialog = require('electron').remote.dialog;
-const remote = require('electron');
 const fileSystem = require('fs');
-let openingIndex=-1;
-let openedFiles = new Array();
-let sideNav = M.Sidenav.init(document.querySelector('.sidenav'));
-let collapSible = M.Collapsible.init(document.querySelector('.collapsible'));
+
+//vue obj
+const Vue = require('./vue');
 let openButton = new Vue({
     el: '#openButton',
     data: {
@@ -17,6 +20,7 @@ let openButton = new Vue({
         readMD: openMarkdown
     }
 });
+
 let fileList = new Vue({
     el: '#fileList',
     data: {
@@ -80,6 +84,10 @@ let mainContent = new Vue({
         }
     }
 });
+
+let openingIndex=-1;
+let openedFiles = new Array();
+
 revertFromStatus();
 
 /*
