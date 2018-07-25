@@ -58,7 +58,7 @@ let fileList = new Vue({
 let mainContent = new Vue({
     el: '#mainContent',
     data: {
-        rawHtml: '<img src="asset/b.JPG"><h1>Welcome to Laurel</h1>',
+        rawHtml: '<img src="asset/b.JPG"><h1>Welcome to Laurel😀</h1>',
         isCenter:true
     },
     methods: {
