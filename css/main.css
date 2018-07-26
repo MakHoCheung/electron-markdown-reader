@@ -1,18 +1,6 @@
-.main {
-    padding-left: 320px;
-    height: 100%;
-}
-
-@media only screen and (max-width: 992px) {
-    .main {
-        padding-left: 0;
-    }
-}
-
-.mainContent {
-    margin: 30px;
-}
-
+/*
+ * sidenav
+ */
 .sidenav {
     overflow: visible;
     display: flex;
@@ -20,29 +8,31 @@
     flex-direction: column;
 }
 
-.list {
+.sidenav-content {
     flex: 1 0 auto;
 }
 
-.theContent::-webkit-scrollbar {
-    width: 4px;
-    background-color: transparent
+/*
+ * mainSection
+ */
+
+#mainSection {
+    padding-left: 320px;
+    height: 100%;
 }
 
-.theContent::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: black
+@media only screen and (max-width: 992px) {
+    #mainSection {
+        padding-left: 0;
+    }
 }
 
-.theContent::-webkit-scrollbar-button {
-    display: none;
+#mainContent {
+    margin: 30px;
 }
 
-#fileList a {
-    font-size: 13px !important;
-    font-weight: 450 !important;
-    height: fit-content !important;
-    line-height: 38px !important;
+#toolBarSection {
+    margin: 20px
 }
 
 pre {
@@ -58,22 +48,39 @@ pre {
     /*InternetExplorer5.5+*/
 }
 
+h1{
+    font-family: comic sans ms;
+}
+
+/* .theContent::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent
+}
+
+.theContent::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: black
+}
+
+.theContent::-webkit-scrollbar-button {
+    display: none;
+} */
+
+/*
+ * fileListSection
+ */
+ 
+#fileList a {
+    font-size: 13px !important;
+    font-weight: 450 !important;
+    height: fit-content !important;
+    line-height: 38px !important;
+}
+
 #fileList li.active {
     background-color: #9e9e9e !important;
 }
 
 #fileList li.active a {
     color: white !important;
-}
-
-#toolBar {
-    margin: 20px
-}
-
-.hideBody {
-    display: none;
-}
-
-h1{
-    font-family: comic sans ms;
 }

@@ -59,6 +59,7 @@ let fileList = new Vue({
         }
     }
 });
+
 let mainContent = new Vue({
     el: '#mainContent',
     data: {
@@ -85,8 +86,8 @@ let mainContent = new Vue({
     }
 });
 
-let openingIndex=-1;
-let openedFiles = new Array();
+let openingIndex;
+let openedFiles;
 
 revertFromStatus();
 
@@ -139,11 +140,13 @@ function revertFromStatus(){
     let statusJson = sessionStorage.getItem('status');
     if(statusJson){
         let status = JSON.parse(statusJson);
-        debugger
         fileList.revert(status.fileListStatus);
         openingIndex = status.pageStatus.openingIndex;
         openedFiles = status.pageStatus.openedFiles;
         mainContent.updateMainContent(openingIndex);
+    }else{
+        openingIndex = -1;
+        openedFiles = new Array();
     }
 }
 

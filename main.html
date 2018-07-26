@@ -13,7 +13,7 @@
         <header>
             <h5 class="center-align grey-text">Laurel Markdown</h5>
         </header>
-        <main class="list">
+        <main class="sidenav-content">
             <section id="openButtonSection" class="center">
                 <button id="openButton" class="btn light-blue lighten-1" @click="readMD()">{{message}}</button>
             </section>
@@ -47,7 +47,7 @@
         </main>
         <footer>
             <div class="divider"></div>
-            <section class="about center">
+            <section class="center" id="aboutSection">
                 <a class="black-text" href="./view/about.html">About</a>
             </section>
         </footer>
@@ -55,8 +55,8 @@
     <!--<a href="#" data-target="slide-out" class="btn sidenav-trigger hide-on-large">
         menu
     </a>-->
-    <main class="main">
-        <div id="toolBar" class="right-align">
+    <main id="mainSection">
+        <div id="toolBarSection" class="right-align">
             <a class="btn-floating  light-blue lighten-1 waves-effect waves-light disabled" href="./view/content.html">
                 <i class="medium material-icons">fullscreen</i>
             </a>
@@ -64,7 +64,7 @@
                 <i class="medium material-icons">close</i>
             </button>
         </div>
-        <article class="mainContent card-panel white" v-bind:class="{center:isCenter}" id="mainContent" v-html="rawHtml">
+        <article class="card-panel white" v-bind:class="{center:isCenter}" id="mainContent" v-html="rawHtml">
         </article>
     </main>
 </body>
