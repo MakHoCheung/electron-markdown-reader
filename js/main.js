@@ -11,6 +11,9 @@ const fileSystem = require('fs');
 
 //vue obj
 const Vue = require('./vue');
+
+const rawHtml = '<img src="asset/b.JPG"><h1>Welcome to Laurel😀</h1>';
+
 let openButton = new Vue({
     el: '#openButton',
     data: {
@@ -39,8 +42,15 @@ let fileList = new Vue({
             }
             collapSible.open();
         },
-        removeFile(fileName) {
-
+        removeFile(openingIndex) {
+            this.files.splice(openingIndex, 1);
+            this.activeIndex--;
+            if (this.files.length !== 0 && this.activeIndex === -1) {
+                this.activeIndex++;
+            }
+            if (this.activeIndex !== -1) {
+                this.files[this.activeIndex].isActive = true;
+            }
         },
         click(file, index) {
             if (this.activeIndex >= 0 && this.activeIndex !== index) {
@@ -50,12 +60,21 @@ let fileList = new Vue({
                 mainContent.updateMainContent(index);
             }
         },
-        revert(fileListStatus){
+        revert(fileListStatus) {
             fileListStatus.files.forEach(element => {
                 this.files.push(element);
             });
-            activeIndex = fileListStatus.activeIndex;
+            this.activeIndex = fileListStatus.activeIndex;
             collapSible.open();
+        },
+        check(fileName) {
+            let flag = false;
+            this.files.forEach(ele => {
+                if (ele.name === fileName) {
+                    flag = true;
+                }
+            });
+            return flag;
         }
     }
 });
@@ -63,8 +82,8 @@ let fileList = new Vue({
 let mainContent = new Vue({
     el: '#mainContent',
     data: {
-        rawHtml: '<img src="asset/b.JPG"><h1>Welcome to Laurel😀</h1>',
-        isCenter:true
+        rawHtml: rawHtml,
+        isCenter: true
     },
     methods: {
         addMainContent: function (fileName, formatHtml) {
@@ -86,6 +105,18 @@ let mainContent = new Vue({
     }
 });
 
+let toolBar = new Vue({
+    el: '#toolBarSection',
+    data: {
+        isDisabled: true
+    },
+    methods: {
+        close() {
+            closeFile();
+        }
+    }
+});
+
 let openingIndex;
 let openedFiles;
 
@@ -97,11 +128,14 @@ revertFromStatus();
 function openMarkdown() {
     dialog.showOpenDialog({ properties: ['openFile'] }, (filePaths) => {
         let openingFileName = tranferPathToName(filePaths[0]);
+        if (fileList.check(openingFileName)) {
+            return;
+        }
+        fileList.addFile(openingFileName);
         let originMd = fileSystem.readFileSync(filePaths[0].toString()).toString();
         let mdHtml = tranferMDToHtml(originMd);
-        fileList.addFile(openingFileName);
-
         mainContent.addMainContent(openingFileName, mdHtml);
+        toolBar.isDisabled = false;
     });
 }
 
@@ -110,7 +144,7 @@ function openMarkdown() {
  */
 function tranferPathToName(filePath) {
     const path = require('path');
-    return path.basename(filePath);
+    return path.basename(filePath).split('.')[0];
 }
 
 /*
@@ -122,31 +156,51 @@ function tranferMDToHtml(mdContent) {
     return convertor.makeHtml(mdContent);
 }
 
-function saveStatusToSessionStorage(){
+function saveStatusToSessionStorage() {
     let status = {
-        fileListStatus:{
-            files:fileList.files,
-            activeIndex:fileList.activeIndex
+        fileListStatus: {
+            files: fileList.files,
+            activeIndex: fileList.activeIndex
         },
-        pageStatus:{
-            openingIndex:openingIndex,
-            openedFiles:openedFiles
+        pageStatus: {
+            openingIndex: openingIndex,
+            openedFiles: openedFiles
         }
     };
-    sessionStorage.setItem('status',JSON.stringify(status));
+    sessionStorage.setItem('status', JSON.stringify(status));
 }
 
-function revertFromStatus(){
+function revertFromStatus() {
     let statusJson = sessionStorage.getItem('status');
-    if(statusJson){
+    if (statusJson) {
         let status = JSON.parse(statusJson);
         fileList.revert(status.fileListStatus);
         openingIndex = status.pageStatus.openingIndex;
         openedFiles = status.pageStatus.openedFiles;
         mainContent.updateMainContent(openingIndex);
-    }else{
+        toolBar.isDisabled = false;
+    } else {
         openingIndex = -1;
         openedFiles = new Array();
+    }
+}
+
+function closeFile() {
+    if (openingIndex === -1) {
+        return;
+    }
+    fileList.removeFile(openingIndex);
+    openedFiles.splice(openingIndex, 1);
+    openingIndex--;
+    if (openingIndex === -1 && openedFiles.length !== 0) {
+        openingIndex++;
+    }
+    if (openingIndex < 0) {
+        toolBar.isDisabled = true;
+        mainContent.rawHtml = rawHtml;
+        mainContent.isCenter = true;
+    } else {
+        mainContent.updateMainContent(openingIndex);
     }
 }
 

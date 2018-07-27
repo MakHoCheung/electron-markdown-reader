@@ -57,10 +57,10 @@
     </a>-->
     <main id="mainSection">
         <div id="toolBarSection" class="right-align">
-            <a class="btn-floating  light-blue lighten-1 waves-effect waves-light disabled" href="./view/content.html">
+            <a class="btn-floating  light-blue lighten-1 waves-effect waves-light" v-bind:class="{disabled:isDisabled}" href="./view/content.html">
                 <i class="medium material-icons">fullscreen</i>
             </a>
-            <button class="btn-floating  light-blue lighten-1 waves-effect waves-light disabled" href="./view/content.html">
+            <button class="btn-floating  light-blue lighten-1 waves-effect waves-light" v-bind:class="{disabled:isDisabled}" @click="close()">
                 <i class="medium material-icons">close</i>
             </button>
         </div>
