@@ -1,0 +1,86 @@
+/*
+ * sidenav
+ */
+.sidenav {
+    overflow: visible;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.sidenav-content {
+    flex: 1 0 auto;
+}
+
+/*
+ * mainSection
+ */
+
+#mainSection {
+    padding-left: 320px;
+    height: 100%;
+}
+
+@media only screen and (max-width: 992px) {
+    #mainSection {
+        padding-left: 0;
+    }
+}
+
+#mainContent {
+    margin: 30px;
+}
+
+#toolBarSection {
+    margin: 20px
+}
+
+pre {
+    white-space: pre-wrap;
+    /*css-3*/
+    white-space: -moz-pre-wrap;
+    /*Mozilla,since1999*/
+    white-space: -pre-wrap;
+    /*Opera4-6*/
+    white-space: -o-pre-wrap;
+    /*Opera7*/
+    word-wrap: break-word;
+    /*InternetExplorer5.5+*/
+}
+
+h1{
+    font-family: comic sans ms;
+}
+
+/* .theContent::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent
+}
+
+.theContent::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: black
+}
+
+.theContent::-webkit-scrollbar-button {
+    display: none;
+} */
+
+/*
+ * fileListSection
+ */
+ 
+#fileList a {
+    font-size: 13px !important;
+    font-weight: 450 !important;
+    height: fit-content !important;
+    line-height: 38px !important;
+}
+
+#fileList li.active {
+    background-color: #9e9e9e !important;
+}
+
+#fileList li.active a {
+    color: white !important;
+}

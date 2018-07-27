@@ -2,9 +2,8 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
-
+let win = null;
 function createMainWindow() {
-    let win = null;
     let windowOptions = {
         width: 1100,
         height: 800
