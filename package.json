@@ -14,10 +14,7 @@
   },
   "dependencies": {
     "materialize-css": "^1.0.0-rc.2",
-<<<<<<< HEAD
-=======
     "mousetrap": "^1.6.2",
->>>>>>> develop
     "showdown": "^1.8.6",
     "vue": "^2.5.16"
   }

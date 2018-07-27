@@ -4,61 +4,6 @@
 <head>
     <meta charset="utf-8" />
     <link type="text/css" rel="stylesheet" href="./css/materialize.min.css" />
-<<<<<<< HEAD
-    <style type="text/css">
-        .mainContent {
-            padding-left: 320px;
-        }
-
-        @media only screen and (max-width: 992px) {
-            .mainContent {
-                padding-left: 0;
-            }
-        }
-
-        .sidenav {
-            overflow: visible;
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        .list {
-            flex: 1 0 auto;
-        }
-
-        .theContent::-webkit-scrollbar {
-            width: 4px;
-            background-color: transparent
-        }
-
-        .theContent::-webkit-scrollbar-thumb {
-            border-radius: 5px;
-            background-color: black
-        }
-
-        .theContent::-webkit-scrollbar-button {
-            display: none;
-        }
-        #fileList a{
-            font-size: 13px !important;
-            font-weight: 450 !important;
-            height: fit-content !important;
-            line-height: 38px !important;
-        }
-    
-    </style>
-</head>
-
-<body>
-    <nav id="slide-out" class="sidenav sidenav-fixed">
-        <header>
-            <h5 class="black-text center-align">Laurel Markdown</h5>
-        </header>
-        <main class="list">
-            <section id="openButtonSection" class="center">
-                <button id="openButton" class="btn grey" @click="readMD()">{{message}}</button>
-=======
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link href="./css/main.css" type="text/css" rel="stylesheet" />
 </head>
@@ -71,7 +16,6 @@
         <main class="sidenav-content">
             <section id="openButtonSection" class="center">
                 <button id="openButton" class="btn light-blue lighten-1" @click="readMD()">{{message}}</button>
->>>>>>> develop
             </section>
             <!--<ul class="collapsible">
                         <li>
@@ -88,17 +32,6 @@
             <section id="fileListSection">
                 <ul class="collapsible">
                     <li>
-<<<<<<< HEAD
-                        <a class="collapsible-header">Files</a>
-                        <div class="divider"></div>
-                        <div class="collapsible-body">
-                            <ul class="collection" id="fileList">
-                                <li v-for="(file,index) in files" @click="click(file,index)" :class="{active:file.isActive,center:true}">
-                                    <a class="black-text">{{file.name}}</a>
-                                </li>
-                            </ul>
-                        </div>
-=======
                         <a class="collapsible-header grey-text">Files</a>
                         <div class="collapsible-body">
                             <ul class="collection" id="fileList">
@@ -108,18 +41,13 @@
                             </ul>
                         </div>
                         <div class="divider black"></div>
->>>>>>> develop
                     </li>
                 </ul>
             </section>
         </main>
         <footer>
             <div class="divider"></div>
-<<<<<<< HEAD
-            <section class="about center">
-=======
             <section class="center" id="aboutSection">
->>>>>>> develop
                 <a class="black-text" href="./view/about.html">About</a>
             </section>
         </footer>
@@ -127,13 +55,6 @@
     <!--<a href="#" data-target="slide-out" class="btn sidenav-trigger hide-on-large">
         menu
     </a>-->
-<<<<<<< HEAD
-    <main class="mainContent" id="mainContent" v-html="rawHtml">
-    </main>
-</body>
-<script type="text/javascript">
-    require('./js/init');
-=======
     <main id="mainSection">
         <div id="toolBarSection" class="right-align">
             <a class="btn-floating  light-blue lighten-1 waves-effect waves-light" v-bind:class="{disabled:isDisabled}" href="./view/content.html">
@@ -149,7 +70,6 @@
 </body>
 <script type="text/javascript">
     require('./js/main');
->>>>>>> develop
 </script>
 
 </html>
