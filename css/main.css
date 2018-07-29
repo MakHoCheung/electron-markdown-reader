@@ -46,6 +46,8 @@ pre {
     /*Opera7*/
     word-wrap: break-word;
     /*InternetExplorer5.5+*/
+    background-color: #f0ecec;
+    padding: 10px
 }
 
 h1{
